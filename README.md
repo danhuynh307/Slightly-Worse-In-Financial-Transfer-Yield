@@ -1,4 +1,4 @@
-# New Worker Hub (swifthub)
+# New Worker Hub (swiftyhub)
 
 An onboarding hub for new team members: find experts by skill, read "About Me"
 profiles, translate acronyms, browse a prompt library, and more. Built as a
