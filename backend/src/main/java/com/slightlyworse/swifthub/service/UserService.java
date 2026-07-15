@@ -36,4 +36,18 @@ public class UserService {
         User user = new User(null, req.name(), req.title(), req.team(), req.bio(), req.photoUrl());
         return UserDto.from(userRepository.save(user));
     }
+
+    /**
+     * Fake-auth "current user": if an X-User-Id was supplied, use it; otherwise
+     * fall back to the first user so the app always has a signed-in identity.
+     */
+    public UserDto getCurrentUser(Long userId) {
+        if (userId != null) {
+            return findById(userId);
+        }
+        return userRepository.findAll().stream()
+                .findFirst()
+                .map(UserDto::from)
+                .orElseThrow(() -> new NotFoundException("No users exist to sign in as"));
+    }
 }
