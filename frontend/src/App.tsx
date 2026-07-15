@@ -4,8 +4,8 @@ import { HomePage } from "./pages/HomePage";
 import { ExpertsPage } from "./pages/ExpertsPage";
 import { StubPage } from "./pages/StubPage";
 
-// Route table. Each stub below is a task a teammate can pick up.
-// Replace <StubPage .../> with the real page component when it's built.
+// Route table. Home + People (experts) are live; the rest render the restyled
+// stub until a teammate builds them (follow the ExpertsPage pattern).
 function App() {
   return (
     <Routes>
@@ -13,11 +13,11 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/experts" element={<ExpertsPage />} />
         <Route
-          path="/about"
+          path="/knowledge"
           element={
             <StubPage
-              title="About Me"
-              description="Photo, name, team, icebreakers, expertise tags, badges."
+              title="Knowledge"
+              description="Indexed docs, guides and runbooks — searchable across the org."
             />
           }
         />
@@ -25,8 +25,26 @@ function App() {
           path="/acronyms"
           element={
             <StubPage
-              title="Acronym Translator"
-              description="Search an acronym → get its meaning and description."
+              title="Acronyms"
+              description="Look up an acronym → get its meaning and description."
+            />
+          }
+        />
+        <Route
+          path="/prompts"
+          element={
+            <StubPage
+              title="Prompts"
+              description="Browse prompts by category, click to copy."
+            />
+          }
+        />
+        <Route
+          path="/praise"
+          element={
+            <StubPage
+              title="Praise"
+              description="Recognition across the hub — give and receive kudos."
             />
           }
         />
@@ -40,20 +58,29 @@ function App() {
           }
         />
         <Route
-          path="/prompts"
+          path="/prompt-library"
           element={
             <StubPage
               title="Prompt Library"
-              description="Browse prompts by category, click to copy."
+              description="Curated, reusable prompts organized by task."
             />
           }
         />
         <Route
-          path="/badges"
+          path="/acronym-translator"
           element={
             <StubPage
-              title="Badges"
-              description="Achievements and recognition across the hub."
+              title="Acronym Translator"
+              description="Translate acronyms across teams and languages."
+            />
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <StubPage
+              title="Settings"
+              description="Profile, appearance and notification preferences."
             />
           }
         />

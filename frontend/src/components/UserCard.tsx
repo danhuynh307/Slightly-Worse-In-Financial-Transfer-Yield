@@ -1,15 +1,10 @@
 import type { User } from "../types";
+import { initialsOf, avatarTint } from "../lib/avatar";
 
 // Presentational card for a single person. No data fetching here on purpose.
 export function UserCard({ user }: { user: User }) {
-  const initials = user.name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .toUpperCase();
-
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
+    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm transition-shadow hover:shadow-md">
       <div className="flex items-center gap-4">
         {user.photoUrl ? (
           <img
@@ -18,18 +13,20 @@ export function UserCard({ user }: { user: User }) {
             className="h-12 w-12 rounded-full object-cover"
           />
         ) : (
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100 font-semibold text-indigo-700">
-            {initials}
+          <div
+            className={`grid h-12 w-12 place-items-center rounded-full text-sm font-semibold ${avatarTint(user.name)}`}
+          >
+            {initialsOf(user.name)}
           </div>
         )}
-        <div>
-          <h3 className="font-semibold text-slate-900">{user.name}</h3>
-          <p className="text-sm text-slate-500">
+        <div className="min-w-0">
+          <h3 className="truncate font-semibold text-foreground">{user.name}</h3>
+          <p className="truncate text-sm text-muted-foreground">
             {user.title} · {user.team}
           </p>
         </div>
       </div>
-      {user.bio && <p className="mt-3 text-sm text-slate-600">{user.bio}</p>}
+      {user.bio && <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{user.bio}</p>}
     </div>
   );
 }
