@@ -1,11 +1,10 @@
 import { useUsers } from "../hooks/useUsers";
 import { UserCard } from "../components/UserCard";
 
-// ⭐ REFERENCE PAGE — fully wired to the backend (GET /users).
-// This is the pattern for every feature: page → hook → api → client → backend.
-// Copy this structure for Acronyms, Prompts, Praise, etc.
+// ⭐ REFERENCE PAGE — fully wired to the backend (GET /api/users) via TanStack Query.
+// Pattern for every feature: page → hook (useQuery) → api module → client → backend.
 export function ExpertsPage() {
-  const { users, loading, error } = useUsers();
+  const { data: users, isLoading, error } = useUsers();
 
   return (
     <div>
@@ -14,20 +13,20 @@ export function ExpertsPage() {
         Everyone in the hub. (Next: filter by expertise tag.)
       </p>
 
-      {loading && <p className="text-slate-500">Loading experts…</p>}
+      {isLoading && <p className="text-slate-500">Loading experts…</p>}
 
       {error && (
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          Couldn't reach the backend: {error}
+          Couldn't reach the backend: {error.message}
           <br />
-          Is Spring Boot running on port 8080? Start it with{" "}
-          <code className="rounded bg-red-100 px-1">./mvnw spring-boot:run</code>
+          Is Spring Boot running on port 8080?{" "}
+          <code className="rounded bg-red-100 px-1">cd backend &amp;&amp; ./mvnw spring-boot:run</code>
         </div>
       )}
 
-      {!loading && !error && (
+      {!isLoading && !error && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {users.map((user) => (
+          {(users ?? []).map((user) => (
             <UserCard key={user.id} user={user} />
           ))}
         </div>

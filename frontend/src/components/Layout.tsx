@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
+import { UserSwitcher } from "./UserSwitcher";
 
 // App shell: persistent sidebar + top bar. Pages render into <Outlet />.
 export function Layout() {
@@ -13,6 +14,9 @@ export function Layout() {
             placeholder="Search people, acronyms, prompts…"
             className="w-full max-w-md rounded-lg border border-slate-200 px-4 py-2 text-sm outline-none focus:border-indigo-400"
           />
+          <div className="ml-auto">
+            <UserSwitcher />
+          </div>
         </header>
         <main className="flex-1 p-8">
           <Outlet />

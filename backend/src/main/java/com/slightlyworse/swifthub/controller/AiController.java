@@ -2,7 +2,6 @@ package com.slightlyworse.swifthub.controller;
 
 import com.slightlyworse.swifthub.service.AiService;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,6 @@ import java.util.List;
 // without a key the app still boots, these calls just error at request time.
 @RestController
 @RequestMapping("/ai")
-@CrossOrigin(origins = "*")
 public class AiController {
 
     private final AiService aiService;
