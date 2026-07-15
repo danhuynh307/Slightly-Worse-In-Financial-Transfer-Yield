@@ -1,43 +1,46 @@
 package com.slightlyworse.swifthub.controller;
 
-import com.slightlyworse.swifthub.entity.User;
-import com.slightlyworse.swifthub.repository.UserRepository;
-import org.springframework.http.ResponseEntity;
+import com.slightlyworse.swifthub.dto.CreateUserRequest;
+import com.slightlyworse.swifthub.dto.UserDto;
+import com.slightlyworse.swifthub.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// Served under /api/users (the /api prefix is applied globally in WebConfig).
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "*") // hackathon-friendly; lock this down before any real deploy
+@CrossOrigin(origins = "*") // replaced by a Vite proxy in Phase 5; fine for now
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getAllUsers() {
+        return userService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        return userRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public UserDto getUser(@PathVariable Long id) {
+        return userService.findById(id);
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userRepository.save(user);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto createUser(@Valid @RequestBody CreateUserRequest request) {
+        return userService.create(request);
     }
 }

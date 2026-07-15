@@ -5,7 +5,7 @@ import { api } from "./client";
 import type { User } from "../types";
 
 export const usersApi = {
-  getAll: () => api.get<User[]>("/users"),
-  getById: (id: number) => api.get<User>(`/users/${id}`),
-  create: (user: Omit<User, "id">) => api.post<User>("/users", user),
+  getAll: () => api.get<User[]>("/api/users"),
+  getById: (id: number) => api.get<User>(`/api/users/${id}`),
+  create: (user: Omit<User, "id">) => api.post<User>("/api/users", user),
 };

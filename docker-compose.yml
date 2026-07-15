@@ -1,0 +1,24 @@
+# Postgres for local dev. Bring it up with:  docker compose up -d
+# Then run the backend with the postgres profile:
+#   cd backend && SPRING_PROFILES_ACTIVE=postgres ./mvnw spring-boot:run
+# The app runs on your host and connects to this container on localhost:5432.
+services:
+  db:
+    image: postgres:16
+    container_name: swifthub-db
+    environment:
+      POSTGRES_DB: swifthub
+      POSTGRES_USER: swifthub
+      POSTGRES_PASSWORD: swifthub
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U swifthub"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
